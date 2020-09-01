@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body >
+    <?php 
+
+    $dbhost = "localhost";
+    $dbname = "producto";
+    $dbuser = "root";
+    $dbpass = "";
+
+    $nombreProducto = $_REQUEST["nombreProducto"];
+    $precioProducto = $_REQUEST["precioProducto"];
+    $idCategoria = $_REQUEST ["idCategoria"];
+
+
+    $conn = new PDO("mysql:host=$dbhost;dbname=$dbname",$dbuser,$dbpass);
+
+
+    $sql = "INSERT INTO tipoproductos(id ,nombreProducto, precioProducto, idCategoria) 
+    VALUES (:id,:nombreProducto,:precioProducto,:idCategoria)";
+    
+
+    $q = $conn->prepare($sql);
+    $resultado = $q ->execute(array(':id'=>null,':nombreProducto'=>$nombreProducto,
+    ':precioProducto'=>$precioProducto, ':idCategoria' => $idCategoria));
+    
+    
+    if($resultado){
+
+        ?>
+        <?php echo $nombreProducto ?> <strong>se agrego a la bd</strong>  
+        
+<?php
+    }else{ 
+        ?> algo salio mal
+        <?php
+
+    }
+
+
+    ?>
+</body>
+</html>
